@@ -84,7 +84,7 @@ window.LOBBY = {
     { date: "2027-09-03", calendar: "corps", closesAt: "1:00 PM", label: "Labor Day Weekend" },
     { date: "2027-09-06", calendar: "corps", closed: true, label: "Labor Day" },
     { date: "2027-10-08", calendar: "corps", closesAt: "1:00 PM", label: "Columbus Day Weekend" },
-    { date: "2027-10-11", calendar: "corps", closed: true, label: "Columbus Day" },
+    { date: "2027-10-12", calendar: "corps", closed: true, label: "Columbus Day" },
     { date: "2027-11-11", calendar: "corps", closed: true, label: "Veterans Day" },
     { date: "2027-11-24", calendar: "corps", closesAt: "12:00 PM", label: "Day before Thanksgiving" },
     { date: "2027-11-25", until: "2027-11-26", calendar: "corps", closed: true, label: "Thanksgiving" },
@@ -177,7 +177,7 @@ window.LOBBY = {
     ,{ "type": "notice", "theme": "cream", "kicker": "Harlem Temple Corps · Holiday Schedule", "title": "Closed for Juneteenth", "date": "2027-06-18", "lead": 3, "rows": [{ "date": "2027-06-18", "status": "Closed", "tone": "closed" }]}
     ,{ "type": "notice", "theme": "cream", "kicker": "Harlem Temple Corps · Holiday Schedule", "title": "Closed for Independence Day", "date": "2027-07-05", "lead": 3, "rows": [{ "date": "2027-07-05", "status": "Closed", "tone": "closed" }]}
     ,{ "type": "notice", "theme": "cream", "kicker": "Harlem Temple Corps · Holiday Schedule", "title": "Labor Day Weekend", "date": "2027-09-03", "until": "2027-09-06", "lead": 3, "rows": [{ "date": "2027-09-03", "status": "Closes at 1:00 PM", "tone": "early" }, { "date": "2027-09-06", "status": "Closed", "tone": "closed" }]}
-    ,{ "type": "notice", "theme": "cream", "kicker": "Harlem Temple Corps · Holiday Schedule", "title": "Columbus Day Weekend", "date": "2027-10-08", "until": "2027-10-11", "lead": 3, "rows": [{ "date": "2027-10-08", "status": "Closes at 1:00 PM", "tone": "early" }, { "date": "2027-10-11", "status": "Closed", "tone": "closed" }]}
+    ,{ "type": "notice", "theme": "cream", "kicker": "Harlem Temple Corps · Holiday Schedule", "title": "Columbus Day Weekend", "date": "2027-10-08", "until": "2027-10-12", "lead": 3, "rows": [{ "date": "2027-10-08", "status": "Closes at 1:00 PM", "tone": "early" }, { "date": "2027-10-12", "status": "Closed", "tone": "closed" }]}
     ,{ "type": "notice", "theme": "cream", "kicker": "Harlem Temple Corps · Holiday Schedule", "title": "Closed for Veterans Day", "date": "2027-11-11", "lead": 3, "rows": [{ "date": "2027-11-11", "status": "Closed", "tone": "closed" }]}
     ,{ "type": "notice", "theme": "cream", "kicker": "Harlem Temple Corps · Holiday Schedule", "title": "Thanksgiving Holiday", "date": "2027-11-24", "until": "2027-11-26", "lead": 3, "rows": [{ "date": "2027-11-24", "status": "Closes at 12 noon", "tone": "early" }, { "date": "2027-11-25", "until": "2027-11-26", "status": "Closed", "tone": "closed" }]}
     ,{ "type": "notice", "theme": "cream", "kicker": "Harlem Temple Corps · Holiday Schedule", "title": "Christmas Holiday", "date": "2027-12-23", "until": "2027-12-24", "lead": 3, "rows": [{ "date": "2027-12-23", "status": "Closes at 12 noon", "tone": "early" }, { "date": "2027-12-24", "status": "Closed", "tone": "closed" }]}
