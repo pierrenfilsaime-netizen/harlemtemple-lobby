@@ -1,0 +1,10 @@
+type,show,kicker,title,subtitle,body,media,fit,date,weekly,time,place,theme,cite,text,duration,start,end
+text,yes,Welcome,Welcome to Harlem Temple,,"Worship, community, and care for every neighbor on Lenox Avenue and beyond.",,,,,,,cream,,,,,
+event,yes,,Sunday Holiness Meeting,,Come as you are.,,,,Sunday,11:00 AM,Main Chapel,,,,,,
+event,yes,,Thanksgiving Community Dinner,,All are welcome.,,,2026-11-26,,5:00 PM,Fellowship Hall,,,,,,
+image,yes,,Food Pantry,Every Tuesday and Thursday,,https://drive.google.com/thumbnail?id=PASTE_FILE_ID&sz=w1920,,,,,,,,,,,
+scripture,yes,,,,,,,,,,,,Matthew 25:40,"Inasmuch as ye have done it unto one of the least of these my brethren, ye have done it unto me.",,,
+youtube,no,,,,,https://www.youtube.com/watch?v=XXXXXXXXXXX,,,,,,,,,60,,
+ticker,yes,,Volunteers needed: scan the code below to sign up,,,,,,,,,,,,,,
+ticker,yes,,All are welcome here,,,,,,,,,,,,,,
+checkin,yes,,Paste the new Golden check-in link in the media column,,,https://checkin.eastern.salvationarmyusa.org/PASTE-NEW-LINK,,,,,,,,,,,
