@@ -35,6 +35,18 @@ In `config.js`, the `schedule` list holds the Corps' regular programs. During th
 
 With the Google Sheet option, add rows with type `schedule`, the program in `title`, days in `weekly`, and the times in `start` and `end`.
 
+## Holidays, closed days and special hours
+
+`exceptions` in `config.js` adjusts the weekly schedule on specific dates:
+
+- `calendar: "corps"` rows come from the Harlem Temple holiday schedule and apply to every program except Afterschool.
+- `calendar: "gains"` rows come from the Harlem G.A.I.N.S. calendar and apply to Afterschool only.
+- `closed: true` closes for the day, `closesAt: "1:00 PM"` is an early closing, and `start` + `end` set special hours (like full-day 8 AM to 6 PM recess days). Add `until` for a date range.
+
+On a Corps holiday the ticker tag shows "Closed Today" or "Closing Early" and alternates with what's up next.
+
+**Holiday notice slides** use `type: "notice"`. `lead: 3` makes a slide appear 3 business days before its `date`, and it disappears the day after `until` (or `date`). Each row is a date with a status pill: `tone` can be `closed` (red), `early` (gold), `open` (green) or `event` (navy).
+
 ## Step 2: Add slides
 
 Each slide in `config.js` is one block between `{ }`. Types:
