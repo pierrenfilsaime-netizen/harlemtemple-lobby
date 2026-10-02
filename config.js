@@ -113,6 +113,68 @@ window.LOBBY = {
     { date: "2027-06-12", until: "2027-09-30", calendar: "gains", closed: true, label: "Summer break" }
   ],
 
+  /* ---------- Verse of the Week (NIV) ---------- */
+  // Changes every Monday on its own, working down this list and starting over at the end.
+  // Add a "week" (the Monday date) to pin a verse to a holiday week; pinned verses only show that week.
+  verseOfWeek: {
+    startWeek: "2026-09-28",
+    verses: [
+      { week: "2026-11-23", ref: "Psalm 100:4", text: "Enter his gates with thanksgiving and his courts with praise; give thanks to him and praise his name." },
+      { week: "2026-12-14", ref: "Isaiah 9:6", text: "For to us a child is born, to us a son is given, and the government will be on his shoulders. And he will be called Wonderful Counselor, Mighty God, Everlasting Father, Prince of Peace." },
+      { week: "2026-12-21", ref: "Luke 2:10-11", text: "But the angel said to them, “Do not be afraid. I bring you good news that will cause great joy for all the people. Today in the town of David a Savior has been born to you; he is the Messiah, the Lord.”" },
+      { week: "2026-12-28", ref: "Lamentations 3:22-23", text: "Because of the Lord’s great love we are not consumed, for his compassions never fail. They are new every morning; great is your faithfulness." },
+      { ref: "Jeremiah 29:11", text: "“For I know the plans I have for you,” declares the Lord, “plans to prosper you and not to harm you, plans to give you hope and a future.”" },
+      { ref: "Philippians 4:13", text: "I can do all this through him who gives me strength." },
+      { ref: "Proverbs 3:5-6", text: "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight." },
+      { ref: "Isaiah 41:10", text: "So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand." },
+      { ref: "Romans 8:28", text: "And we know that in all things God works for the good of those who love him, who have been called according to his purpose." },
+      { ref: "Joshua 1:9", text: "Have I not commanded you? Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go." },
+      { ref: "Psalm 46:1", text: "God is our refuge and strength, an ever-present help in trouble." },
+      { ref: "Matthew 11:28", text: "“Come to me, all you who are weary and burdened, and I will give you rest.”" },
+      { ref: "John 3:16", text: "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life." },
+      { ref: "Galatians 6:9", text: "Let us not become weary in doing good, for at the proper time we will reap a harvest if we do not give up." },
+      { ref: "Psalm 23:1", text: "The Lord is my shepherd, I lack nothing." },
+      { ref: "Micah 6:8", text: "He has shown you, O mortal, what is good. And what does the Lord require of you? To act justly and to love mercy and to walk humbly with your God." },
+      { ref: "1 Corinthians 13:13", text: "And now these three remain: faith, hope and love. But the greatest of these is love." },
+      { ref: "Hebrews 11:1", text: "Now faith is confidence in what we hope for and assurance about what we do not see." },
+      { ref: "Romans 12:12", text: "Be joyful in hope, patient in affliction, faithful in prayer." },
+      { ref: "Isaiah 40:31", text: "But those who hope in the Lord will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint." },
+      { ref: "2 Corinthians 5:17", text: "Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!" },
+      { ref: "Matthew 5:16", text: "In the same way, let your light shine before others, that they may see your good deeds and glorify your Father in heaven." },
+      { ref: "James 1:22", text: "Do not merely listen to the word, and so deceive yourselves. Do what it says." },
+      { ref: "Psalm 119:105", text: "Your word is a lamp for my feet, a light on my path." },
+      { ref: "John 14:27", text: "Peace I leave with you; my peace I give you. I do not give to you as the world gives. Do not let your hearts be troubled and do not be afraid." },
+      { ref: "1 Peter 5:7", text: "Cast all your anxiety on him because he cares for you." },
+      { ref: "Hebrews 13:2", text: "Do not forget to show hospitality to strangers, for by so doing some people have shown hospitality to angels without knowing it." },
+      { ref: "Proverbs 19:17", text: "Whoever is kind to the poor lends to the Lord, and he will reward them for what they have done." },
+      { ref: "Psalm 34:18", text: "The Lord is close to the brokenhearted and saves those who are crushed in spirit." },
+      { ref: "John 13:34", text: "A new command I give you: Love one another. As I have loved you, so you must love one another." },
+      { ref: "Galatians 5:22-23", text: "But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control. Against such things there is no law." },
+      { ref: "Romans 15:13", text: "May the God of hope fill you with all joy and peace as you trust in him, so that you may overflow with hope by the power of the Holy Spirit." },
+      { ref: "Matthew 6:33", text: "But seek first his kingdom and his righteousness, and all these things will be given to you as well." },
+      { ref: "1 John 4:19", text: "We love because he first loved us." },
+      { ref: "Deuteronomy 31:8", text: "The Lord himself goes before you and will be with you; he will never leave you nor forsake you. Do not be afraid; do not be discouraged." },
+      { ref: "2 Timothy 1:7", text: "For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline." },
+      { ref: "Luke 6:31", text: "Do to others as you would have them do to you." },
+      { ref: "Isaiah 26:3", text: "You will keep in perfect peace those whose minds are steadfast, because they trust in you." },
+      { ref: "Psalm 37:4", text: "Take delight in the Lord, and he will give you the desires of your heart." },
+      { ref: "Proverbs 22:6", text: "Start children off on the way they should go, and even when they are old they will not turn from it." },
+      { ref: "1 Thessalonians 5:16-18", text: "Rejoice always, pray continually, give thanks in all circumstances; for this is God’s will for you in Christ Jesus." },
+      { ref: "Psalm 133:1", text: "How good and pleasant it is when God’s people live together in unity!" },
+      { ref: "Romans 12:10", text: "Be devoted to one another in love. Honor one another above yourselves." },
+      { ref: "1 Peter 4:10", text: "Each of you should use whatever gift you have received to serve others, as faithful stewards of God’s grace in its various forms." },
+      { ref: "Psalm 9:9", text: "The Lord is a refuge for the oppressed, a stronghold in times of trouble." },
+      { ref: "John 1:5", text: "The light shines in the darkness, and the darkness has not overcome it." },
+      { ref: "Matthew 5:9", text: "Blessed are the peacemakers, for they will be called children of God." },
+      { ref: "James 1:27", text: "Religion that God our Father accepts as pure and faultless is this: to look after orphans and widows in their distress and to keep oneself from being polluted by the world." },
+      { ref: "Proverbs 16:3", text: "Commit to the Lord whatever you do, and he will establish your plans." },
+      { ref: "Ephesians 4:32", text: "Be kind and compassionate to one another, forgiving each other, just as in Christ God forgave you." },
+      { ref: "1 John 3:18", text: "Dear children, let us not love with words or speech but with actions and in truth." },
+      { ref: "Psalm 145:18", text: "The Lord is near to all who call on him, to all who call on him in truth." },
+      { ref: "Romans 5:8", text: "But God demonstrates his own love for us in this: While we were still sinners, Christ died for us." }
+    ]
+  },
+
   /* ---------- Timing ---------- */
   defaultDuration: 12,       // seconds each slide stays up (videos play to the end)
   sheetRefreshMinutes: 5,    // how often to re-check the Google Sheet for new content
@@ -128,6 +190,7 @@ window.LOBBY = {
   // Optional on any slide: duration (seconds), start / end ("2026-11-01") to auto show and hide.
   // Themes for text slides: "cream", "navy", "red"
   slides: [
+    { type: "verseofweek", duration: 15 },
     {
       type: "text", theme: "cream",
       kicker: "Welcome",

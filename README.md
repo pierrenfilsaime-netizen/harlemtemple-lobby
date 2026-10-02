@@ -47,6 +47,10 @@ On a Corps holiday the ticker tag shows "Closed Today" or "Closing Early" and al
 
 **Holiday notice slides** use `type: "notice"`. `lead: 3` makes a slide appear 3 business days before its `date`, and it disappears the day after `until` (or `date`). Each row is a date with a status pill: `tone` can be `closed` (red), `early` (gold), `open` (green) or `event` (navy).
 
+## Verse of the Week
+
+`verseOfWeek` in `config.js` holds a list of NIV verses. The Verse of the Week slide changes on its own every Monday, working down the list and starting over at the end. To pin a verse to a particular week (Thanksgiving, Christmas), give it `week: "YYYY-MM-DD"` with that week's Monday date. Pinned verses show only that week. Long verses shrink to fit automatically.
+
 ## Step 2: Add slides
 
 Each slide in `config.js` is one block between `{ }`. Types:
