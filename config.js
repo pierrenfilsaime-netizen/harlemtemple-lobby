@@ -142,12 +142,8 @@ window.LOBBY = {
       place: "Main Chapel",
       body: "Come as you are. Children's ministry available during service."
     },
-    {
-      type: "text", theme: "red",
-      kicker: "Christmas Toy Distribution",
-      title: "Registration is open",
-      body: "Families can pick up an application at the front desk. Bring ID for each parent or guardian and proof of each child's age."
-    },
+    { type: "image", media: "media/music-arts-26-27.jpg", fit: "contain", duration: 15 },
+    { type: "image", media: "media/christmas-toy-distribution.jpg", fit: "contain", duration: 15, end: "2026-12-19" },
     {
       type: "scripture",
       text: "Inasmuch as ye have done it unto one of the least of these my brethren, ye have done it unto me.",
