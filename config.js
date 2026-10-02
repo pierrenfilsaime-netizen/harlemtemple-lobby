@@ -16,7 +16,7 @@ window.LOBBY = {
   volunteerSignup: {
     label: "Volunteer Sign-Up",
     hint:  "Join the team",
-    url:   "https://volunteer.eastern.salvationarmyusa.org/opportunities/WUpNn7fMpd"
+    url:   "https://x.gldn.io/e/The_Salvation_Army_New_York_Harlem_Temple_Corps_Community_Center"
   },
   volunteerCheckin: {
     label: "Volunteer Check-In",
