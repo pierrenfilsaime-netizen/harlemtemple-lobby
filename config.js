@@ -146,8 +146,8 @@ window.LOBBY = {
     { type: "image", media: "media/christmas-toy-distribution.jpg", fit: "contain", duration: 15, end: "2026-12-19" },
     {
       type: "scripture",
-      text: "Inasmuch as ye have done it unto one of the least of these my brethren, ye have done it unto me.",
-      cite: "Matthew 25:40"
+      text: "Truly I tell you, whatever you did for one of the least of these brothers and sisters of mine, you did for me.",
+      cite: "Matthew 25:40 (NIV)"
     },
     {
       type: "text", theme: "navy",
