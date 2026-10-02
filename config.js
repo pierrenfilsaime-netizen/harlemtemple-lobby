@@ -49,6 +49,16 @@ window.LOBBY = {
     "Christmas Toy Distribution registration information available at the front desk"
   ],
 
+  /* ---------- Weekly schedule (gold "Happening Now" tag on the ticker) ---------- */
+  // During these hours the tag shows the program live. Between programs it shows what's "Up Next".
+  // days: any mix like "Mon, Tue, Thu, Fri", or "Weekdays", or "Daily".  Times like "9:30 AM".
+  // place is optional (shows as "Lower Hall · until 11:30 AM").
+  schedule: [
+    { name: "Food Pantry", days: "Mon, Tue, Thu, Fri", start: "9:30 AM", end: "11:30 AM", place: "" }
+
+    // ,{ name: "Program name", days: "Wed", start: "6:00 PM", end: "7:30 PM", place: "Chapel" }
+  ],
+
   /* ---------- Timing ---------- */
   defaultDuration: 12,       // seconds each slide stays up (videos play to the end)
   sheetRefreshMinutes: 5,    // how often to re-check the Google Sheet for new content

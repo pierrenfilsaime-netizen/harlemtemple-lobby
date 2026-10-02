@@ -25,6 +25,16 @@ Open `config.js` in Notepad (or any text editor) and change:
 3. **logo**: save your logo as `media/logo.png`. If it isn't there, the red "HT" badge shows instead.
 4. **ticker**: the scrolling lines in the red strip.
 
+## Weekly schedule (the "Happening Now" tag)
+
+In `config.js`, the `schedule` list holds the Corps' regular programs. During those hours, the gold tag on the ticker shows the program with a pulsing dot ("Happening Now: Food Pantry, until 11:30 AM"). Between programs it turns cream and shows "Up Next" with the day and time. If two things run at once, it alternates between them.
+
+```js
+{ name: "Food Pantry", days: "Mon, Tue, Thu, Fri", start: "9:30 AM", end: "11:30 AM", place: "Lower Hall" }
+```
+
+With the Google Sheet option, add rows with type `schedule`, the program in `title`, days in `weekly`, and the times in `start` and `end`.
+
 ## Step 2: Add slides
 
 Each slide in `config.js` is one block between `{ }`. Types:

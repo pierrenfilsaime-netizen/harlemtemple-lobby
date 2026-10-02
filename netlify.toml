@@ -1,0 +1,14 @@
+# Plain static site: no build step, publish this folder as is.
+[build]
+  publish = "."
+  command = ""
+
+# Always fetch the latest settings and page, so lobby screens pick up changes on refresh.
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

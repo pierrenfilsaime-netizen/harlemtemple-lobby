@@ -91,6 +91,17 @@
   #l3{position:fixed;left:0;right:0;bottom:0;height:var(--l3h);z-index:10;display:flex;flex-direction:column;filter:drop-shadow(0 calc(var(--u)*-.6) calc(var(--u)*2) rgba(0,0,0,.28))}
   .ticker{flex:none;height:calc(var(--u)*2.9);display:flex;background:var(--red);color:#fff;overflow:hidden}
   .ticker .tag{flex:none;display:flex;align-items:center;padding:0 calc(var(--u)*1.8);background:var(--gold);color:var(--navy);font:800 calc(var(--u)*1.15)/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;clip-path:polygon(0 0,100% 0,calc(100% - var(--u)*1.2) 100%,0 100%);padding-right:calc(var(--u)*2.8)}
+  .ticker .tag{gap:calc(var(--u)*1.1);letter-spacing:0;text-transform:none;max-width:48%;transition:background .5s}
+  .tag .lab{font:800 calc(var(--u)*1.05)/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}
+  .tag .dot{width:calc(var(--u)*1);height:calc(var(--u)*1);border-radius:50%;background:var(--red);flex:none;box-shadow:0 0 0 0 rgba(211,36,44,.6);animation:pulse 1.8s ease-out infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(211,36,44,.55)}100%{box-shadow:0 0 0 calc(var(--u)*1.1) rgba(211,36,44,0)}}
+  .tag .what{display:flex;align-items:baseline;gap:calc(var(--u)*.9);min-width:0;padding-left:calc(var(--u)*1.1);border-left:2px solid rgba(19,32,59,.35);transition:opacity .45s}
+  .tag .what b{font:700 calc(var(--u)*1.6)/1 var(--serif);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tag .what i{font:600 calc(var(--u)*1.1)/1 var(--sans);font-style:normal;white-space:nowrap;opacity:.8}
+  .tag .what.fade{opacity:0}
+  .ticker .tag.next{background:#F7F0E3}
+  .ticker .tag.next .dot{display:none}
+  .ticker .tag.quiet .what{display:none}
   .marquee{flex:1;overflow:hidden;display:flex;align-items:center;mask-image:linear-gradient(90deg,transparent 0,#000 3%,#000 97%,transparent 100%)}
   .track{display:flex;white-space:nowrap;animation:scroll var(--tdur,40s) linear infinite;will-change:transform}
   .track span{font:600 calc(var(--u)*1.45)/1 var(--sans);padding:0 calc(var(--u)*1.6);display:inline-flex;align-items:center;gap:calc(var(--u)*3.2)}
@@ -137,7 +148,7 @@
 
 <div id="l3">
   <div class="ticker">
-    <div class="tag">Happening Now</div>
+    <div class="tag quiet" id="tag"><span class="dot"></span><span class="lab" id="tagLab">Happening Now</span><span class="what" id="tagWhat"><b id="tagName"></b><i id="tagTime"></i></span></div>
     <div class="marquee"><div class="track" id="track"></div></div>
     <div class="clock"><b id="time"></b><small id="date"></small></div>
   </div>
@@ -240,6 +251,76 @@
   }
   renderTicker();
   if (document.fonts) document.fonts.ready.then(renderTicker);
+
+  /* ---------- Weekly schedule: what's happening now / up next ---------- */
+  const DAYS = ["sun","mon","tue","wed","thu","fri","sat"];
+  const DAYNAMES = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  function parseDays(d){
+    const s = String(d || "").toLowerCase();
+    if (/every\s*day|daily/.test(s)) return [0,1,2,3,4,5,6];
+    if (/weekdays?/.test(s)) return [1,2,3,4,5];
+    const out = [];
+    s.split(/[^a-z]+/).forEach(w => { const i = DAYS.indexOf(w.slice(0,3)); if (i >= 0 && w.length >= 3) out.push(i); });
+    return out;
+  }
+  function parseTime(t){
+    const m = String(t || "").trim().toLowerCase().match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm|a|p)?$/);
+    if (!m) return null;
+    let h = +m[1]; const mi = +(m[2] || 0); const ap = m[3];
+    if (ap && ap[0] === "p" && h < 12) h += 12;
+    if (ap && ap[0] === "a" && h === 12) h = 0;
+    return h * 60 + mi;
+  }
+  function fmt(mins){
+    const h = Math.floor(mins / 60) % 24, m = mins % 60;
+    return ((h % 12) || 12) + (m ? ":" + String(m).padStart(2, "0") : "") + (h < 12 ? " AM" : " PM");
+  }
+  let schedule = [];
+  function setSchedule(list){
+    schedule = (list || []).map(x => ({
+      name: x.name || x.title, place: x.place || "",
+      days: parseDays(x.days || x.weekly), s: parseTime(x.start || x.from), e: parseTime(x.end || x.to)
+    })).filter(x => x.name && x.days.length && x.s != null && x.e != null && x.e > x.s);
+  }
+  setSchedule(C.schedule);
+
+  function nowList(){
+    const d = new Date(), wd = d.getDay(), m = d.getHours() * 60 + d.getMinutes();
+    return schedule.filter(x => x.days.includes(wd) && m >= x.s && m < x.e).sort((a, b) => a.e - b.e);
+  }
+  function nextUp(){
+    const d = new Date(), wd = d.getDay(), m = d.getHours() * 60 + d.getMinutes();
+    for (let k = 0; k < 7; k++) {
+      const day = (wd + k) % 7;
+      const c = schedule.filter(x => x.days.includes(day) && (k > 0 || x.s > m)).sort((a, b) => a.s - b.s)[0];
+      if (c) return { item: c, when: k === 0 ? "Today " + fmt(c.s) : k === 1 ? "Tomorrow " + fmt(c.s) : DAYNAMES[day] + " " + fmt(c.s) };
+    }
+    return null;
+  }
+  let liveIdx = 0, lastKey = "";
+  function renderNow(){
+    const tag = $("tag"), what = $("tagWhat");
+    const live = nowList();
+    let lab, name = "", time = "", mode;
+    if (live.length) {
+      const x = live[liveIdx++ % live.length];
+      mode = "live"; lab = "Happening Now"; name = x.name;
+      time = (x.place ? x.place + " · " : "") + "until " + fmt(x.e);
+    } else {
+      const n = nextUp();
+      if (n) { mode = "next"; lab = "Up Next"; name = n.item.name; time = n.when; }
+      else { mode = "quiet"; lab = "Happening Now"; }
+    }
+    const key = mode + name + time;
+    if (key === lastKey) return;
+    const apply = () => {
+      tag.classList.toggle("next", mode === "next"); tag.classList.toggle("quiet", mode === "quiet");
+      $("tagLab").textContent = lab; $("tagName").textContent = name; $("tagTime").textContent = time;
+      what.classList.remove("fade"); lastKey = key;
+    };
+    if (lastKey) { what.classList.add("fade"); setTimeout(apply, 450); } else apply();
+  }
+  renderNow(); setInterval(renderNow, 7000);
 
   /* clock */
   function tick(){
@@ -429,7 +510,9 @@
       const rows = parseCSV(await res.text()).filter(r => String(r.show || "yes").toLowerCase() !== "no");
       const ck = rows.find(r => r.type && r.type.toLowerCase() === "checkin" && r.media);
       if (ck && ck.media !== checkinUrl) { checkinUrl = ck.media; renderCheckin(); }
-      const sl = rows.filter(r => r.type && !["ticker","checkin"].includes(r.type.toLowerCase()));
+      const sc = rows.filter(r => r.type && r.type.toLowerCase() === "schedule").map(r => ({ name: r.title, days: r.weekly || r.days, start: r.start, end: r.end, place: r.place }));
+      if (sc.length) { setSchedule(sc); lastKey = ""; renderNow(); }
+      const sl = rows.filter(r => r.type && !["ticker","checkin","schedule"].includes(r.type.toLowerCase()));
       const tk = rows.filter(r => r.type && r.type.toLowerCase() === "ticker").map(r => r.title || r.body).filter(Boolean);
       if (sl.length) { slides = sl; store.set("lobby-sheet", { slides: sl, ticker: tk }); }
       if (tk.length) { tickerItems = tk; renderTicker(); }
