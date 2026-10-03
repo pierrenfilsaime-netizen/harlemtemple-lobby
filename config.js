@@ -119,7 +119,7 @@ window.LOBBY = {
   // When the channel goes live, the stream takes over the screen (the lower third stays),
   // and the slides come back on their own when the stream ends.
   livestream: {
-    youtubeChannel: "",        // your channel's @handle (e.g. "@HarlemTemple") or its UC... channel ID. Blank = off.
+    youtubeChannel: "@harlemtemplecorps1348",   // your channel's @handle (e.g. "@HarlemTemple") or its UC... channel ID. Blank = off.
     sound: true,               // play the stream's audio in the lobby (false = muted)
     busyDays: "Sun", busyFrom: "9:30 AM", busyTo: "2:00 PM",   // check every minute in this window, every 5 minutes otherwise
     label: ""                  // text next to LIVE; blank = name of the program happening now (e.g. "Holiness Service")
