@@ -40,7 +40,10 @@ export default async (req) => {
       return json({ status: r.status, finalUrl: r.url, length: html.length,
         title: pick(/<title>[^<]*<\/title>/), canonical: pick(/<link rel="canonical"[^>]*>/),
         isLiveNow: pick(/"isLiveNow":\s*\w+/), isLive: pick(/"isLive":\s*\w+/), liveContent: pick(/"isLiveContent":\s*\w+/),
-        style: pick(/"style":"LIVE"/), videoIdAny: pick(/"videoId":"[\w-]{11}"/), consent: /consent\.youtube|before you continue/i.test(html) });
+        style: pick(/"style":"LIVE"/), videoIdAny: pick(/"videoId":"[\w-]{11}"/), consent: /consent\.youtube|before you continue/i.test(html),
+        vd: (() => { const i = html.indexOf('"videoDetails":{'); return i < 0 ? null : html.slice(i, i + 400); })(),
+        aroundIsLive: (() => { const i = html.indexOf('"isLive":true'); return i < 0 ? null : html.slice(Math.max(0, i - 300), i + 60); })(),
+        countIsLiveTrue: (html.match(/"isLive":true/g) || []).length, hasPlayerResponse: html.includes("ytInitialPlayerResponse") });
     }
     return json({ live, videoId: live ? canon[1] : null, checked: new Date().toISOString() });
   } catch (e) {
