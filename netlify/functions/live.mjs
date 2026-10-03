@@ -1,18 +1,34 @@
 // Is the Harlem Temple YouTube channel live right now?
 // Called by the lobby screen: /.netlify/functions/live?channel=@YourHandle  (or a UC... channel ID)
 // Returns { live: true, videoId: "..." } while a stream is on air, otherwise { live: false }.
-// It reads the channel's public /live page on YouTube, so no API key is needed.
+// It reads the channel's public /live page on YouTube (no API key needed).
+// A stream that is only scheduled ("upcoming", people waiting) does NOT count as live.
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), {
   status,
   headers: {
     "content-type": "application/json",
     "access-control-allow-origin": "*",
-    // let Netlify's CDN reuse an answer for 30 seconds so several screens don't each hit YouTube
     "cache-control": "public, max-age=0, must-revalidate",
-    "netlify-cdn-cache-control": "public, s-maxage=30"
+    "netlify-cdn-cache-control": "public, s-maxage=30"   // several screens share one answer for 30 seconds
   }
 });
+
+// Pull the JSON object that starts at `marker` out of the page (brace matching, string aware).
+function extractObject(html, marker){
+  const at = html.indexOf(marker);
+  if (at < 0) return null;
+  const start = html.indexOf("{", at);
+  let depth = 0, inStr = false, esc = false;
+  for (let i = start; i < html.length; i++) {
+    const c = html[i];
+    if (inStr) { if (esc) esc = false; else if (c === "\\") esc = true; else if (c === '"') inStr = false; continue; }
+    if (c === '"') inStr = true;
+    else if (c === "{") depth++;
+    else if (c === "}") { depth--; if (depth === 0) { try { return JSON.parse(html.slice(start, i + 1)); } catch { return null; } } }
+  }
+  return null;
+}
 
 export default async (req) => {
   const url = new URL(req.url);
@@ -30,26 +46,19 @@ export default async (req) => {
       redirect: "follow"
     });
     const html = await r.text();
-    // When live, /live resolves to the stream's watch page and the player reports isLiveNow:true.
-    // When not live it shows the channel page (or a scheduled "upcoming" stream, which has isLiveNow:false).
-    const canon = html.match(/<link rel="canonical" href="https:\/\/www\.youtube\.com\/watch\?v=([\w-]{11})"/);
-    const liveNow = /"isLiveNow":\s*true/.test(html);
-    const live = !!(canon && liveNow);
+    const player = extractObject(html, "ytInitialPlayerResponse = ") || extractObject(html, "ytInitialPlayerResponse=");
+    const vd = (player && player.videoDetails) || {};
+    const lbd = (((player || {}).microformat || {}).playerMicroformatRenderer || {}).liveBroadcastDetails || {};
+    const ps = ((player || {}).playabilityStatus || {}).status;
+
+    // Live = the channel's /live video is a live broadcast on air right now (not merely scheduled).
+    const live = !!(vd.videoId && vd.isLive === true && vd.isUpcoming !== true && lbd.isLiveNow !== false && ps === "OK");
+
     if (url.searchParams.get("debug") === "1") {
-      const i = html.indexOf('"videoDetails":{'), vd = i < 0 ? "" : html.slice(i, i + 4000);
-      const has = (t, re) => re.test(t);
-      return json({
-        vdVideoId: (vd.match(/"videoId":"([\w-]{11})"/) || [])[1] || null,
-        vd_isLive_true: has(vd, /"isLive":true/), vd_isUpcoming_true: has(vd, /"isUpcoming":true/), vd_isLiveContent_true: has(vd, /"isLiveContent":true/),
-        page_isLiveNow_true: has(html, /"isLiveNow":true/), page_isLiveNow_false: has(html, /"isLiveNow":false/),
-        page_isUpcoming_true: has(html, /"isUpcoming":true/), page_upcomingEventData: html.includes("upcomingEventData"),
-        page_watchingNow: /watching now|"watching"/.test(html), page_waiting: /waiting/.test(html),
-        page_scheduledStartTime: (html.match(/"scheduledStartTime":"(\d+)"/) || [])[1] || null,
-        page_startTimestamp: (html.match(/"startTimestamp":"([^"]+)"/) || [])[1] || null,
-        page_endTimestamp: (html.match(/"endTimestamp":"([^"]+)"/) || [])[1] || null
-      });
+      return json({ live, videoId: vd.videoId || null, title: vd.title || null, isLive: vd.isLive ?? null, isUpcoming: vd.isUpcoming ?? null,
+        isLiveContent: vd.isLiveContent ?? null, isLiveNow: lbd.isLiveNow ?? null, playability: ps || null, foundPlayer: !!player });
     }
-    return json({ live, videoId: live ? canon[1] : null, checked: new Date().toISOString() });
+    return json({ live, videoId: live ? vd.videoId : null, checked: new Date().toISOString() });
   } catch (e) {
     return json({ live: false, error: "Could not reach YouTube" }, 502);
   }
