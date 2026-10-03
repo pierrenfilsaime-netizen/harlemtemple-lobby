@@ -36,14 +36,18 @@ export default async (req) => {
     const liveNow = /"isLiveNow":\s*true/.test(html);
     const live = !!(canon && liveNow);
     if (url.searchParams.get("debug") === "1") {
-      const pick = re => { const m = html.match(re); return m ? m[0].slice(0, 160) : null; };
-      return json({ status: r.status, finalUrl: r.url, length: html.length,
-        title: pick(/<title>[^<]*<\/title>/), canonical: pick(/<link rel="canonical"[^>]*>/),
-        isLiveNow: pick(/"isLiveNow":\s*\w+/), isLive: pick(/"isLive":\s*\w+/), liveContent: pick(/"isLiveContent":\s*\w+/),
-        style: pick(/"style":"LIVE"/), videoIdAny: pick(/"videoId":"[\w-]{11}"/), consent: /consent\.youtube|before you continue/i.test(html),
-        vd: (() => { const i = html.indexOf('"videoDetails":{'); return i < 0 ? null : html.slice(i, i + 400); })(),
-        aroundIsLive: (() => { const i = html.indexOf('"isLive":true'); return i < 0 ? null : html.slice(Math.max(0, i - 300), i + 60); })(),
-        countIsLiveTrue: (html.match(/"isLive":true/g) || []).length, hasPlayerResponse: html.includes("ytInitialPlayerResponse") });
+      const i = html.indexOf('"videoDetails":{'), vd = i < 0 ? "" : html.slice(i, i + 4000);
+      const has = (t, re) => re.test(t);
+      return json({
+        vdVideoId: (vd.match(/"videoId":"([\w-]{11})"/) || [])[1] || null,
+        vd_isLive_true: has(vd, /"isLive":true/), vd_isUpcoming_true: has(vd, /"isUpcoming":true/), vd_isLiveContent_true: has(vd, /"isLiveContent":true/),
+        page_isLiveNow_true: has(html, /"isLiveNow":true/), page_isLiveNow_false: has(html, /"isLiveNow":false/),
+        page_isUpcoming_true: has(html, /"isUpcoming":true/), page_upcomingEventData: html.includes("upcomingEventData"),
+        page_watchingNow: /watching now|"watching"/.test(html), page_waiting: /waiting/.test(html),
+        page_scheduledStartTime: (html.match(/"scheduledStartTime":"(\d+)"/) || [])[1] || null,
+        page_startTimestamp: (html.match(/"startTimestamp":"([^"]+)"/) || [])[1] || null,
+        page_endTimestamp: (html.match(/"endTimestamp":"([^"]+)"/) || [])[1] || null
+      });
     }
     return json({ live, videoId: live ? canon[1] : null, checked: new Date().toISOString() });
   } catch (e) {
