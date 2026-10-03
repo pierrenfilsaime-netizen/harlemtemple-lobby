@@ -211,6 +211,15 @@ window.LOBBY = {
       title: "Welcome to Harlem Temple",
       body: "Worship, community, and care for every neighbor on Lenox Avenue and beyond."
     },
+    {
+      type: "feature", duration: 18,
+      media: "media/captains.jpg", focus: "50% 28%",
+      kicker: "Meet Our Captains",
+      names: ["Captain Neekenson Fils-Aime", "Captain Jeanne-Elie Fils-Aime"],
+      role: "Corps Officers • The Salvation Army Harlem Temple Corps",
+      tagline: "Serving God. Loving People. Strengthening Harlem.",
+      body: "Captain Neek and Captain Jeanne-Elie are honored to serve the Harlem community through faith, compassion, and service. Together, they lead Harlem Temple’s worship and ministry while supporting programs that serve children, youth, families, seniors, and neighbors in need."
+    },
     { type: "programs", duration: 10 },   // one slide for every program in the weekly schedule above, built automatically
     { type: "image", media: "media/music-arts-26-27.jpg", fit: "contain", duration: 15 },
     { type: "image", media: "media/christmas-toy-distribution.jpg", fit: "contain", duration: 15, end: "2026-12-19" },

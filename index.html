@@ -68,6 +68,20 @@
   .meta svg{width:calc(var(--u)*2.3);height:calc(var(--u)*2.3);color:var(--red);flex:none}
   .s-event .title{font-size:calc(var(--u)*5.8)}
 
+  /* feature slide: photo left, story right */
+  .s-feature{background:radial-gradient(110% 90% at 85% 0%, var(--navy2) 0%, var(--navy) 60%, #0C1528 100%);color:var(--cream)}
+  .f-left{position:absolute;left:0;top:0;bottom:var(--l3h);width:46%;overflow:hidden}
+  .f-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .f-fade{position:absolute;inset:0;background:linear-gradient(90deg, rgba(19,32,59,0) 62%, rgba(19,32,59,.85) 92%, var(--navy) 100%)}
+  .f-right{position:absolute;left:46%;right:0;top:0;bottom:var(--l3h);padding:calc(var(--u)*3.5) calc(var(--u)*5) calc(var(--u)*3) calc(var(--u)*3.6);display:flex;flex-direction:column;justify-content:center;border-left:calc(var(--u)*.35) solid var(--gold)}
+  .s-feature .kicker{color:var(--gold);margin-bottom:calc(var(--u)*1.6)}
+  .f-names{display:grid;gap:calc(var(--u)*1.1)}
+  .f-name{font:700 calc(var(--u)*2.95)/1.05 var(--serif);letter-spacing:-.01em;color:#fff}
+  .f-name small{display:block;font:800 calc(var(--u)*1)/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:calc(var(--u)*.5)}
+  .f-role{margin-top:calc(var(--u)*1.5);font:600 calc(var(--u)*1.25)/1.35 var(--sans);letter-spacing:.04em;color:var(--cream);opacity:.85}
+  .f-tag{margin-top:calc(var(--u)*1.4);align-self:flex-start;width:fit-content;white-space:nowrap;font:italic 500 calc(var(--u)*1.75)/1.2 var(--serif);color:var(--navy);background:var(--gold);padding:calc(var(--u)*.8) calc(var(--u)*1.5);border-radius:calc(var(--u)*.6)}
+  .f-body{margin-top:calc(var(--u)*1.6);font:400 calc(var(--u)*1.45)/1.5 var(--sans);color:var(--cream);opacity:.92;max-width:calc(var(--u)*46)}
+
   /* livestream takeover */
   #live{position:fixed;left:0;right:0;top:0;bottom:var(--l3h);z-index:8;background:#000;opacity:0;pointer-events:none;transition:opacity 1s}
   #live.on{opacity:1}
@@ -516,6 +530,28 @@
         '<h1 class="title">' + esc(s.title) + '</h1>' +
         (meta ? '<div class="meta">' + meta + '</div>' : '') +
         (s.body ? '<p class="body">' + esc(s.body) + '</p>' : '') + '</div></div>'));
+      return d;
+    }
+
+    if (type === "feature") {
+      // Photo on the left, story on the right (e.g. Meet Our Captains)
+      const img = await loadImg(s.media);
+      img.className = "f-photo kb"; img.alt = "";
+      img.style.setProperty("--kbdur", (durationOf(s) / 1000 + 4) + "s");
+      img.style.setProperty("--kbo", s.focus || "50% 30%");
+      img.style.objectPosition = s.focus || "50% 30%";
+      const d = el("slide s-feature");
+      const ph = el("f-left"); ph.appendChild(img); ph.appendChild(el("f-fade")); d.appendChild(ph);
+      const names = (s.names || []).map(n => {
+        const m = String(n).match(/^(Captain|Major|Lieutenant|Lt\.|Colonel|Envoy|Sergeant)\s+(.*)$/i);
+        return '<div class="f-name">' + (m ? '<small>' + esc(m[1]) + '</small>' + esc(m[2]) : esc(n)) + '</div>';
+      }).join("");
+      d.appendChild(el("f-right",
+        '<div class="kicker">' + esc(s.kicker || "") + '</div>' +
+        '<div class="f-names">' + names + '</div>' +
+        (s.role ? '<div class="f-role">' + esc(s.role) + '</div>' : '') +
+        (s.tagline ? '<div class="f-tag">' + esc(s.tagline) + '</div>' : '') +
+        (s.body ? '<p class="f-body">' + esc(s.body) + '</p>' : '')));
       return d;
     }
 
