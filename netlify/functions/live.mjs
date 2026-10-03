@@ -35,6 +35,13 @@ export default async (req) => {
     const canon = html.match(/<link rel="canonical" href="https:\/\/www\.youtube\.com\/watch\?v=([\w-]{11})"/);
     const liveNow = /"isLiveNow":\s*true/.test(html);
     const live = !!(canon && liveNow);
+    if (url.searchParams.get("debug") === "1") {
+      const pick = re => { const m = html.match(re); return m ? m[0].slice(0, 160) : null; };
+      return json({ status: r.status, finalUrl: r.url, length: html.length,
+        title: pick(/<title>[^<]*<\/title>/), canonical: pick(/<link rel="canonical"[^>]*>/),
+        isLiveNow: pick(/"isLiveNow":\s*\w+/), isLive: pick(/"isLive":\s*\w+/), liveContent: pick(/"isLiveContent":\s*\w+/),
+        style: pick(/"style":"LIVE"/), videoIdAny: pick(/"videoId":"[\w-]{11}"/), consent: /consent\.youtube|before you continue/i.test(html) });
+    }
     return json({ live, videoId: live ? canon[1] : null, checked: new Date().toISOString() });
   } catch (e) {
     return json({ live: false, error: "Could not reach YouTube" }, 502);
