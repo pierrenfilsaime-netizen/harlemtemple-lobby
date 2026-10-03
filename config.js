@@ -61,6 +61,8 @@ window.LOBBY = {
     { name: "Bible Study",              days: "Wed",                start: "6:30 PM",  end: "7:30 PM" },
     { name: "Prayer Meeting",           days: "Wed",                start: "7:30 PM",  end: "8:00 PM" },
     { name: "Youth Music and Arts",     days: "Fri",                start: "6:00 PM",  end: "8:30 PM" },
+    { name: "Sunday School",            days: "Sun",                start: "10:00 AM", end: "11:00 AM" },
+    { name: "Holiness Service",         days: "Sun",                start: "11:00 AM" },  // no end time given, shows for 1 hour
     { name: "Beginners Band",           days: "Sun",                start: "1:25 PM" },   // no end time given, shows for 1 hour
     { name: "Harlem Haven for Seniors", days: "Wed",                start: "10:00 AM", end: "1:00 PM" }
   ],
@@ -201,10 +203,9 @@ window.LOBBY = {
     {
       type: "event",
       weekly: "Sunday",          // for a one-time event use  date: "2026-10-18"  instead (it hides itself after that day)
-      title: "Sunday Holiness Meeting",
+      title: "Holiness Service",
       time: "11:00 AM",
-      place: "Main Chapel",
-      body: "Come as you are. Children's ministry available during service."
+      body: "Sunday School begins at 10:00 AM. All are welcome."
     },
     { type: "image", media: "media/music-arts-26-27.jpg", fit: "contain", duration: 15 },
     { type: "image", media: "media/christmas-toy-distribution.jpg", fit: "contain", duration: 15, end: "2026-12-19" },
