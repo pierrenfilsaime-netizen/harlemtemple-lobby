@@ -30,6 +30,14 @@ function extractObject(html, marker){
   return null;
 }
 
+// Find the first value stored under `key` anywhere inside a nested object.
+function findKey(obj, key, depth = 0){
+  if (!obj || typeof obj !== "object" || depth > 40) return null;
+  if (Object.prototype.hasOwnProperty.call(obj, key)) return obj[key];
+  for (const v of Array.isArray(obj) ? obj : Object.values(obj)) { const f = findKey(v, key, depth + 1); if (f) return f; }
+  return null;
+}
+
 export default async (req) => {
   const url = new URL(req.url);
   const channel = (url.searchParams.get("channel") || process.env.YOUTUBE_CHANNEL || "").trim();
@@ -51,14 +59,27 @@ export default async (req) => {
     const lbd = (((player || {}).microformat || {}).playerMicroformatRenderer || {}).liveBroadcastDetails || {};
     const ps = ((player || {}).playabilityStatus || {}).status;
 
-    // Live = the channel's /live video is a live broadcast on air right now (not merely scheduled).
-    const live = !!(vd.videoId && vd.isLive === true && vd.isUpcoming !== true && lbd.isLiveNow !== false && ps === "OK");
+    // 1) Main signal: YouTube's player data says this is a live broadcast on air now (not merely scheduled).
+    const playerLive = !!(vd.videoId && vd.isLive === true && vd.isUpcoming !== true && lbd.isLiveNow !== false && ps === "OK");
+
+    // 2) Backup when YouTube withholds player data (e.g. "login required" bot check): the watch page's
+    //    view counter reads "N watching now" during a live stream and "N waiting" for a scheduled one.
+    const data = extractObject(html, "ytInitialData = ") || extractObject(html, "ytInitialData=");
+    const primary = findKey(data, "videoPrimaryInfoRenderer");
+    const vvc = primary && primary.viewCount && primary.viewCount.videoViewCountRenderer;
+    const counter = vvc ? JSON.stringify(vvc.viewCount || vvc.originalViewCount || "") : "";
+    const pageVideoId = (((data || {}).currentVideoEndpoint || {}).watchEndpoint || {}).videoId || vd.videoId || null;
+    const pageLive = !!(pageVideoId && vvc && vvc.isLive === true && /watching/i.test(counter) && !/waiting/i.test(counter) && vd.isUpcoming !== true);
+
+    const live = ps === "OK" ? playerLive : pageLive;
+    const videoIdOut = live ? (vd.videoId || pageVideoId) : null;
 
     if (url.searchParams.get("debug") === "1") {
-      return json({ live, videoId: vd.videoId || null, title: vd.title || null, isLive: vd.isLive ?? null, isUpcoming: vd.isUpcoming ?? null,
-        isLiveContent: vd.isLiveContent ?? null, isLiveNow: lbd.isLiveNow ?? null, playability: ps || null, foundPlayer: !!player });
+      return json({ live, videoId: videoIdOut, playability: ps || null, playerLive, pageLive, pageVideoId,
+        isLive: vd.isLive ?? null, isUpcoming: vd.isUpcoming ?? null, isLiveNow: lbd.isLiveNow ?? null,
+        counterIsLive: vvc ? vvc.isLive ?? null : null, counter: counter.slice(0, 120) });
     }
-    return json({ live, videoId: live ? vd.videoId : null, checked: new Date().toISOString() });
+    return json({ live, videoId: videoIdOut, checked: new Date().toISOString() });
   } catch (e) {
     return json({ live: false, error: "Could not reach YouTube" }, 502);
   }
