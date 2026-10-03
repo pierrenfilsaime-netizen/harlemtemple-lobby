@@ -57,7 +57,7 @@ window.LOBBY = {
   schedule: [
     { name: "Food Pantry",              days: "Mon, Tue, Thu, Fri", start: "9:30 AM",  end: "11:30 AM" },
     { name: "Soup Kitchen",             days: "Weekdays",           start: "11:00 AM", end: "12:30 PM" },
-    { name: "Afterschool",              days: "Weekdays",           start: "2:00 PM",  end: "6:00 PM", calendar: "gains" },
+    { name: "Afterschool",              days: "Weekdays",           start: "2:00 PM",  end: "6:00 PM", calendar: "gains", kicker: "Harlem G.A.I.N.S." },
     { name: "Bible Study",              days: "Wed",                start: "6:30 PM",  end: "7:30 PM" },
     { name: "Prayer Meeting",           days: "Wed",                start: "7:30 PM",  end: "8:00 PM" },
     { name: "Youth Music and Arts",     days: "Fri",                start: "6:00 PM",  end: "8:30 PM" },
@@ -200,13 +200,7 @@ window.LOBBY = {
       title: "Welcome to Harlem Temple",
       body: "Worship, community, and care for every neighbor on Lenox Avenue and beyond."
     },
-    {
-      type: "event",
-      weekly: "Sunday",          // for a one-time event use  date: "2026-10-18"  instead (it hides itself after that day)
-      title: "Holiness Service",
-      time: "11:00 AM",
-      body: "Sunday School begins at 10:00 AM. All are welcome."
-    },
+    { type: "programs", duration: 10 },   // one slide for every program in the weekly schedule above, built automatically
     { type: "image", media: "media/music-arts-26-27.jpg", fit: "contain", duration: 15 },
     { type: "image", media: "media/christmas-toy-distribution.jpg", fit: "contain", duration: 15, end: "2026-12-19" },
     {

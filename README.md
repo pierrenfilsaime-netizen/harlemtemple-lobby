@@ -35,6 +35,10 @@ In `config.js`, the `schedule` list holds the Corps' regular programs. During th
 
 With the Google Sheet option, add rows with type `schedule`, the program in `title`, days in `weekly`, and the times in `start` and `end`.
 
+## Program slides
+
+`{ type: "programs" }` in the slides list builds one slide for every program in `schedule` automatically: name, time, the days it meets (today is underlined), and a live status (Happening now, Today, Next, or Closed today and when it's back). Add or change a program in `schedule` and its slide follows. Optional fields on a program: `kicker` (small line above the name), `place`, and `about` (a sentence describing it).
+
 ## Holidays, closed days and special hours
 
 `exceptions` in `config.js` adjusts the weekly schedule on specific dates:
