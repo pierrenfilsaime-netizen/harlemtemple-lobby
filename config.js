@@ -178,7 +178,8 @@ window.LOBBY = {
   /* ---------- Timing ---------- */
   defaultDuration: 12,       // seconds each slide stays up (videos play to the end)
   sheetRefreshMinutes: 5,    // how often to re-check the Google Sheet for new content
-  reloadEveryHours: 6,       // full refresh to pick up any changes to this file
+  updateCheckSeconds: 60,    // how often the screen checks for a newly published version and reloads itself
+  reloadEveryHours: 6,       // extra full refresh as a safety net
 
   /* ---------- Optional: run the slides from a Google Sheet ---------- */
   // Paste the "Publish to web > CSV" link here and the screen will follow the sheet.
