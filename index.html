@@ -770,12 +770,12 @@
         else if (++misses >= 2) hideLive();        // two "not live" answers in a row before switching back
       } catch(e) { /* network hiccup: keep whatever is showing */ }
     }
-    // Check every minute during the Sunday service window, every 5 minutes otherwise (catches special services too)
+    // Check every minute during the Sunday service window, every 30 minutes otherwise (still catches special services)
     function liveDelay(){
       const d = new Date(), m = d.getHours() * 60 + d.getMinutes();
       const busyWindow = (LS.busyDays || "Sun").toLowerCase().includes(DAYS[d.getDay()]) &&
         m >= (parseTime(LS.busyFrom || "9:30 AM") ?? 570) && m <= (parseTime(LS.busyTo || "2:00 PM") ?? 840);
-      return (currentId || busyWindow ? 1 : 5) * 60e3;
+      return (currentId || busyWindow ? 1 : (LS.quietCheckMinutes || 30)) * 60e3;
     }
     (function loop(){ checkLive().finally(() => setTimeout(loop, liveDelay())); })();
   }
@@ -783,13 +783,16 @@
   /* ---------- Auto-update: reload as soon as a new version is published ---------- */
   // Every minute, fetch the page and settings fresh from the server and compare them with what's running.
   // If either changed, reload. If the internet is down, keep showing what's on screen.
+  // Uses HEAD requests: the server answers with each file's version stamp (ETag) without sending the file,
+  // so checking costs almost nothing. Falls back to downloading only if no stamp is available.
   async function fingerprint(){
     const files = ["index.html", "config.js"];
     let s = "";
     for (const f of files) {
-      const r = await fetch(f + "?check=" + Date.now(), { cache: "no-store" });
+      const r = await fetch(f, { method: "HEAD", cache: "no-store" });
       if (!r.ok) throw new Error(f + " " + r.status);
-      s += await r.text();
+      const stamp = r.headers.get("etag") || r.headers.get("last-modified");
+      s += stamp ? stamp : await (await fetch(f, { cache: "no-store" })).text();
     }
     let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
     return h;
@@ -803,7 +806,7 @@
         if (running === null) running = f;
         else if (f !== running) location.reload();
       } catch(e) { /* offline or server hiccup: try again next minute */ }
-    }, (C.updateCheckSeconds || 60) * 1000);
+    }, (C.updateCheckSeconds || 300) * 1000);
   }
   if (C.sheetCsvUrl) setInterval(loadSheet, (C.sheetRefreshMinutes || 5) * 60e3);
 })();

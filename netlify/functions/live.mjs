@@ -74,11 +74,6 @@ export default async (req) => {
     const live = ps === "OK" ? playerLive : pageLive;
     const videoIdOut = live ? (vd.videoId || pageVideoId) : null;
 
-    if (url.searchParams.get("debug") === "1") {
-      return json({ live, videoId: videoIdOut, playability: ps || null, playerLive, pageLive, pageVideoId,
-        isLive: vd.isLive ?? null, isUpcoming: vd.isUpcoming ?? null, isLiveNow: lbd.isLiveNow ?? null,
-        counterIsLive: vvc ? vvc.isLive ?? null : null, counter: counter.slice(0, 120) });
-    }
     return json({ live, videoId: videoIdOut, checked: new Date().toISOString() });
   } catch (e) {
     return json({ live: false, error: "Could not reach YouTube" }, 502);
