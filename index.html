@@ -68,6 +68,15 @@
   .meta svg{width:calc(var(--u)*2.3);height:calc(var(--u)*2.3);color:var(--red);flex:none}
   .s-event .title{font-size:calc(var(--u)*5.8)}
 
+  /* livestream takeover */
+  #live{position:fixed;left:0;right:0;top:0;bottom:var(--l3h);z-index:8;background:#000;opacity:0;pointer-events:none;transition:opacity 1s}
+  #live.on{opacity:1}
+  .live-frame,.live-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .live-bug{position:absolute;left:calc(var(--u)*2.4);top:calc(var(--u)*2.4);display:flex;align-items:center;gap:calc(var(--u)*.9);background:var(--red);color:#fff;font:800 calc(var(--u)*1.4)/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;padding:calc(var(--u)*1) calc(var(--u)*1.6);border-radius:calc(var(--u)*.6);box-shadow:0 calc(var(--u)*.4) calc(var(--u)*1.4) rgba(0,0,0,.4)}
+  .live-bug i{width:calc(var(--u)*.9);height:calc(var(--u)*.9);border-radius:50%;background:#fff;animation:pulse 1.8s ease-out infinite}
+  .live-bug span{letter-spacing:.06em;text-transform:none;font-weight:600;opacity:.95}
+  .live-bug span:not(:empty)::before{content:"·";margin:0 calc(var(--u)*.7) 0 calc(var(--u)*.2)}
+
   /* program slides (one per weekly program) */
   .s-program .meta{font-size:calc(var(--u)*2.4)}
   .t-navy .meta svg{color:var(--gold)} .t-red .meta svg{color:var(--gold)}
@@ -215,6 +224,7 @@
   </div>
 </div>
 
+<div id="live"><div class="live-frame" id="liveFrame"></div><div class="live-bug"><i></i>Live<span id="liveLabel"></span></div></div>
 <div id="hint">Click anywhere or press F for full screen</div>
 <div id="paused">PAUSED</div>
 
@@ -654,10 +664,11 @@
     }
   }
 
+  let liveOn = false;
   async function next(step){
     step = step || 1;
     clearTimeout(timer);
-    if (paused || busy) return;
+    if (paused || busy || liveOn) return;
     if (C.reloadEveryHours && Date.now() - bootTime > C.reloadEveryHours * 3600e3 && navigator.onLine !== false) { location.reload(); return; }
     busy = true;
     const list = live();
@@ -728,6 +739,46 @@
 
   /* go */
   loadSheet().finally(() => next(1));
+
+  /* ---------- Livestream: show the YouTube stream whenever the channel is live ---------- */
+  const LS = C.livestream || {};
+  if (LS.youtubeChannel && location.protocol.startsWith("http")) {
+    let currentId = null, misses = 0;
+    function showLive(id){
+      if (currentId === id) return;
+      currentId = id; liveOn = true; clearTimeout(timer);
+      const mute = LS.sound === false ? 1 : 0;
+      $("liveFrame").innerHTML = '<iframe allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen src="https://www.youtube.com/embed/' + id +
+        '?autoplay=1&mute=' + mute + '&controls=0&rel=0&playsinline=1&modestbranding=1&iv_load_policy=3"></iframe>';
+      // name the program that's on now, e.g. "Holiness Service"
+      const on = nowList()[0]; $("liveLabel").textContent = LS.label || (on ? on.name : "");
+      $("live").classList.add("on");
+      prog.style.transition = "none"; prog.style.width = "100%";
+    }
+    function hideLive(){
+      if (!currentId) return;
+      currentId = null; liveOn = false;
+      $("live").classList.remove("on");
+      setTimeout(() => { if (!currentId) $("liveFrame").innerHTML = ""; }, 1100);
+      next(1);
+    }
+    async function checkLive(){
+      try {
+        const r = await fetch("/.netlify/functions/live?channel=" + encodeURIComponent(LS.youtubeChannel) + "&t=" + Date.now(), { cache: "no-store" });
+        const j = await r.json();
+        if (j.live && j.videoId) { misses = 0; showLive(j.videoId); }
+        else if (++misses >= 2) hideLive();        // two "not live" answers in a row before switching back
+      } catch(e) { /* network hiccup: keep whatever is showing */ }
+    }
+    // Check every minute during the Sunday service window, every 5 minutes otherwise (catches special services too)
+    function liveDelay(){
+      const d = new Date(), m = d.getHours() * 60 + d.getMinutes();
+      const busyWindow = (LS.busyDays || "Sun").toLowerCase().includes(DAYS[d.getDay()]) &&
+        m >= (parseTime(LS.busyFrom || "9:30 AM") ?? 570) && m <= (parseTime(LS.busyTo || "2:00 PM") ?? 840);
+      return (currentId || busyWindow ? 1 : 5) * 60e3;
+    }
+    (function loop(){ checkLive().finally(() => setTimeout(loop, liveDelay())); })();
+  }
 
   /* ---------- Auto-update: reload as soon as a new version is published ---------- */
   // Every minute, fetch the page and settings fresh from the server and compare them with what's running.
