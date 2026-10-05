@@ -307,6 +307,24 @@
   }
   $("l2").textContent = s2.label || "";
   renderCheckin(); setInterval(renderCheckin, 60e3);
+
+  /* Daily check-in link from the repository's "data" branch (updating it needs no Netlify publish).
+     Used whenever it holds a link that hasn't expired; otherwise the link in config.js is used. */
+  const CHECKIN_FEED = s2.feed || "";
+  async function loadCheckinFeed(){
+    if (!CHECKIN_FEED) return;
+    try {
+      const r = await fetch(CHECKIN_FEED + "?t=" + Math.floor(Date.now() / 60000), { cache: "no-store" });
+      if (!r.ok) return;
+      const j = await r.json();
+      const u = String(j.url || "").trim();
+      if (!/^https:\/\//.test(u) || u === checkinUrl) return;
+      const exp = linkExpiry(u);
+      if (exp && Date.now() > exp) return;          // ignore an expired feed link
+      checkinUrl = u; renderCheckin();
+    } catch(e) { /* offline: keep the current code */ }
+  }
+  loadCheckinFeed(); setInterval(loadCheckinFeed, 10 * 60e3);
   $("qr3").innerHTML = qrSvg(vcard(s3)); $("l3t").textContent = s3.label || ""; $("h3").textContent = s3.hint || "";
 
   /* ticker */

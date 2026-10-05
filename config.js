@@ -23,7 +23,9 @@ window.LOBBY = {
     hint:  "Here today?",
     // NOTE: Golden check-in links are made for one day and expire. Paste a fresh one when it changes.
     // When this link expires, the screen automatically swaps the code for "See the front desk" instead of showing a dead code.
-    url:   "https://checkin.eastern.salvationarmyusa.org/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlLZXkiOiJaLWpqWFFsbTBzNGM3UzB5eEhlLXc2ZWVOdGN4M2ptOTdEdE1QblUzIiwiZGF5T2ZUaW1lc2xvdHMiOiIyMDI2LTEwLTAyIiwib3JnYW5pemF0aW9uIjoidmtpQ3VKZ3ZqTCIsImlzQ2hlY2tpbiI6dHJ1ZSwiaWF0IjoxNzkwOTU1MDQyLCJleHAiOjE3OTEzMDA2NDJ9.E1xUHYPKXl8hmjsnOUnZ8RyGCzxqlURD5JV-ET2Jarc?dayOf=true",
+    url:   "https://checkin.eastern.salvationarmyusa.org/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlLZXkiOiJaLWpqWFFsbTBzNGM3UzB5eEhlLXc2ZWVOdGN4M2ptOTdEdE1QblUzIiwiZGF5T2ZUaW1lc2xvdHMiOiIyMDI2LTEwLTA1Iiwib3JnYW5pemF0aW9uIjoidmtpQ3VKZ3ZqTCIsImlzQ2hlY2tpbiI6dHJ1ZSwiaWF0IjoxNzkxMjEyNzEyLCJleHAiOjE3OTE1NTgzMTJ9.zg3Lpxcly5SIPHngU_98yaDjhTe9wq-duvvzxzYlcfk?dayOf=true",
+    // Newer daily links are read from this file (no Netlify publish needed). It wins whenever its link hasn't expired.
+    feed:  "https://raw.githubusercontent.com/pierrenfilsaime-netizen/harlemtemple-lobby/data/checkin.json",
     expiredHint: "See the front desk"
   },
   // Scanning this one saves the Corps as a contact in the visitor's phone.
