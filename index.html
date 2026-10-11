@@ -329,9 +329,14 @@
 
   /* ticker */
   let tickerItems = C.ticker || [];
+  let tickerKey = "";
   function renderTicker(){
     const t = $("track");
-    const items = tickerItems.length ? tickerItems : [C.corpsName || "Welcome"];
+    // Upcoming closures and dated events go first; they appear 3 business days ahead and drop off after their last day
+    let dyn = []; try { dyn = upcomingTicker(); } catch(e) { /* slides not ready yet */ }
+    const base = tickerItems.length ? tickerItems : [C.corpsName || "Welcome"];
+    const items = dyn.concat(base);
+    tickerKey = items.join("|");
     const html = items.map(x => "<span>" + esc(x) + "</span>").join("");
     t.innerHTML = html + html;   // doubled for a seamless loop
     requestAnimationFrame(() => {
@@ -502,6 +507,32 @@
     ? schedule.map((p, i) => ({ type: "program", program: p, theme: THEMES[i % 3], duration: s.duration }))
     : [s]);
   const live = () => expand(slides).filter(s => s && s.type && s.type !== "ticker" && isLive(s));
+
+  /* Ticker lines for upcoming closures (notice slides) and one-time events, using the same timing as their slides */
+  function upcomingTicker(){
+    const fd = x => x.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+    const who = k => /g\.?a\.?i\.?n\.?s|afterschool/i.test(k || "") ? "Afterschool" : "Harlem Temple";
+    const out = [];
+    expand(slides).forEach(s => {
+      if (!s || !isLive(s)) return;
+      const lead = s.lead ?? s.tickerLead ?? 3;
+      const st = day(s.date); if (!st) return;
+      if (new Date() < businessDaysBefore(st, parseInt(lead, 10))) return;
+      if (s.type === "notice") {
+        const rows = (s.rows || []).map(r => {
+          const a = day(r.date), b = day(r.until);
+          return (a ? (b && b > a ? fd(a) + " to " + fd(b) : fd(a)) : (r.when || "")) + ": " + r.status;
+        });
+        out.push(who(s.kicker) + " · " + s.title + (rows.length ? " · " + rows.join(" · ") : ""));
+      } else if (s.type === "event" && !s.weekly) {
+        out.push("Coming up · " + s.title + " · " + fd(st) + (s.time ? ", " + s.time : ""));
+      }
+    });
+    return out;
+  }
+  // Re-check every 10 minutes (and right after midnight) so lines appear and drop off on time
+  function refreshTicker(){ let k = ""; try { k = upcomingTicker().concat(tickerItems).join("|"); } catch(e) {} if (k && k !== tickerKey) renderTicker(); }
+  setTimeout(refreshTicker, 0); setInterval(refreshTicker, 10 * 60e3);
 
   const ICON_CLOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 7v5l3.2 2"/></svg>';
   const ICON_PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
