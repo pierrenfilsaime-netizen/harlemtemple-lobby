@@ -227,6 +227,8 @@ window.LOBBY = {
     { type: "image", media: "media/christmas-toy-distribution.jpg", fit: "contain", duration: 15, end: "2026-12-19" },
     { type: "image", media: "media/harvest-celebration-2026.jpg", fit: "contain", duration: 15, date: "2026-11-15", end: "2026-11-15",
       ticker: "Annual Harvest Celebration: Still We Sow · Sun, Nov 15, 3:00 PM · Guest speakers Lt. Colonels David & Margaret Davis" },
+    { type: "image", media: "media/valentine-gala-tea-2027.jpg", fit: "contain", duration: 15, start: "2027-01-04", date: "2027-02-13", end: "2027-02-13",
+      ticker: "Valentine Gala & Tea · Sat, Feb 13, 5:00 PM · $30 per person, $50 per couple · Dress to impress" },
     { type: "image", media: "media/womens-ministry.jpg", fit: "contain", duration: 15 },
     { type: "image", media: "media/mens-ministry.jpg", fit: "contain", duration: 15 },
     {
