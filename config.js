@@ -225,6 +225,10 @@ window.LOBBY = {
     { type: "programs", duration: 10 },   // one slide for every program in the weekly schedule above, built automatically
     { type: "image", media: "media/music-arts-26-27.jpg", fit: "contain", duration: 15 },
     { type: "image", media: "media/christmas-toy-distribution.jpg", fit: "contain", duration: 15, end: "2026-12-19" },
+    { type: "image", media: "media/harvest-celebration-2026.jpg", fit: "contain", duration: 15, date: "2026-11-15", end: "2026-11-15",
+      ticker: "Annual Harvest Celebration: Still We Sow · Sun, Nov 15, 3:00 PM · Guest speakers Lt. Colonels David & Margaret Davis" },
+    { type: "image", media: "media/womens-ministry.jpg", fit: "contain", duration: 15 },
+    { type: "image", media: "media/mens-ministry.jpg", fit: "contain", duration: 15 },
     {
       type: "scripture",
       text: "Truly I tell you, whatever you did for one of the least of these brothers and sisters of mine, you did for me.",

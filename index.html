@@ -524,6 +524,8 @@
           return (a ? (b && b > a ? fd(a) + " to " + fd(b) : fd(a)) : (r.when || "")) + ": " + r.status;
         });
         out.push(who(s.kicker) + " · " + s.title + (rows.length ? " · " + rows.join(" · ") : ""));
+      } else if (s.ticker) {
+        out.push(s.ticker);                                    // any dated slide can carry its own ticker line
       } else if (s.type === "event" && !s.weekly) {
         out.push("Coming up · " + s.title + " · " + fd(st) + (s.time ? ", " + s.time : ""));
       }
