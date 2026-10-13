@@ -1,13 +1,6 @@
 {
   "about": "Daily Salvation Army Fact of the Day for the Harlem Temple lobby screen. One entry per date (YYYY-MM-DD). 'used' lists facts already shown so new ones are never repeated.",
-  "facts": [
-    {
-      "cat": "History",
-      "stat": "1865",
-      "text": "The Salvation Army began in 1865 in London’s East End, when William and Catherine Booth started preaching in the streets to people the churches overlooked. It was first called the East London Christian Mission.",
-      "date": "2026-10-13"
-    }
-  ],
+  "facts": [],
   "used": [
     "The Salvation Army began in 1865 in London’s East End, when William and Catherine Booth started preaching in the streets to people the churches overlooked. It was first called the East London Christian Mission.",
     "The name came from a single edit. In 1878 William Booth changed the line “We are a volunteer army” to “We are a salvation army,” and the name stuck.",
