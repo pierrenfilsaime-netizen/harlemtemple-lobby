@@ -190,6 +190,53 @@ window.LOBBY = {
     ]
   },
 
+  /* ---------- Salvation Army Fact of the Day ---------- */
+  // One fact per day, working down the list and starting over at the end. Add, edit or remove lines freely.
+  // cat: "History", "Ecclesiastical" or "Service".  stat: optional big number or year shown beside the fact.
+  factOfDay: {
+    startDate: "2026-10-13",
+    facts: [
+      { cat: "History", stat: "1865", text: "The Salvation Army began in 1865 in London’s East End, when William and Catherine Booth started preaching in the streets to people the churches overlooked. It was first called the East London Christian Mission." },
+      { cat: "History", stat: "1878", text: "The name came from a single edit. In 1878 William Booth changed the line “We are a volunteer army” to “We are a salvation army,” and the name stuck." },
+      { cat: "History", stat: "1880", text: "The Salvation Army officially arrived in America in March 1880, when George Scott Railton and seven women officers landed in New York City. Our U.S. story started right here in New York." },
+      { cat: "History", stat: "1891", text: "The first red kettle was set out in San Francisco in 1891 by Captain Joseph McFee, to pay for a free Christmas dinner for people in need. He borrowed the idea from a donation pot he remembered from the docks of Liverpool." },
+      { cat: "History", stat: "1917", text: "During World War I, Salvation Army volunteers fried doughnuts for soldiers in France. National Donut Day, the first Friday in June, began in Chicago in 1938 to honor them." },
+      { cat: "History", stat: "", text: "Catherine Booth is called the Mother of The Salvation Army. Long before it was common, she argued that women had every right to preach, and women have led and preached in the Army from the start." },
+      { cat: "History", stat: "1934", text: "Evangeline Booth, daughter of the Founders, led The Salvation Army in the United States for 30 years. In 1934 she became the first woman to serve as General of the worldwide Army." },
+      { cat: "History", stat: "1878", text: "Salvation Army brass bands began in 1878 in Salisbury, England, when the Fry family brought their instruments to help the open-air meetings be heard." },
+      { cat: "History", stat: "1879", text: "The War Cry, The Salvation Army’s magazine, has been published since 1879. It is still printed today." },
+      { cat: "History", stat: "1890", text: "In 1890 William Booth published “In Darkest England and the Way Out,” a plan to fight poverty with work, shelter and food. Many Salvation Army social services grew from it." },
+      { cat: "History", stat: "", text: "“Soup, soap and salvation” has long summed up The Salvation Army’s way of caring for the whole person: a meal, a fresh start, and the Good News." },
+      { cat: "History", stat: "", text: "William Booth wrote the song “O Boundless Salvation.” Salvationists know it as the Founder’s Song, and it is still sung around the world." },
+      { cat: "History", stat: "1979", text: "Angel Tree began in 1979 at a shopping mall in Lynchburg, Virginia, started by Majors Charles and Shirley White. Today it helps millions of children receive Christmas gifts." },
+      { cat: "History", stat: "", text: "In 2004 The Salvation Army received more than $1.5 billion from the estate of Joan Kroc, one of the largest charitable gifts ever made. It built Kroc Community Centers across the country." },
+      { cat: "History", stat: "", text: "After September 11, 2001, Salvation Army teams served meals, water and comfort to rescue and recovery workers at Ground Zero for months." },
+      { cat: "Ecclesiastical", stat: "", text: "The Salvation Army is a Christian church, part of the worldwide Body of Christ. Its local congregations are called corps, like Harlem Temple Corps." },
+      { cat: "Ecclesiastical", stat: "", text: "Salvation Army pastors are called officers. They are ordained ministers who serve with ranks such as Lieutenant, Captain and Major." },
+      { cat: "Ecclesiastical", stat: "", text: "Members of The Salvation Army are called soldiers. They make their commitment by signing the Soldier’s Covenant." },
+      { cat: "Ecclesiastical", stat: "11", text: "The Salvation Army’s beliefs are summed up in 11 doctrines, beginning with the inspiration of the Bible." },
+      { cat: "Ecclesiastical", stat: "", text: "The Salvation Army does not practice baptism or communion as rituals. It teaches that God’s grace is received by faith, lived out in daily life." },
+      { cat: "Ecclesiastical", stat: "", text: "Sunday morning worship is traditionally called the Holiness Meeting, rooted in the Army’s Wesleyan teaching about living a holy life." },
+      { cat: "Ecclesiastical", stat: "", text: "The flag’s colors each mean something: red for the blood of Jesus, yellow for the fire of the Holy Spirit, and blue for the purity of God the Father." },
+      { cat: "Ecclesiastical", stat: "", text: "“Blood and Fire” is The Salvation Army’s motto. It points to the blood of Christ that saves and the fire of the Holy Spirit that makes holy." },
+      { cat: "Ecclesiastical", stat: "", text: "Many Salvation Army halls have a mercy seat, a bench at the front where anyone may kneel to pray. It is open to everyone, not just members." },
+      { cat: "Ecclesiastical", stat: "", text: "The “S” on a Salvationist’s uniform is often said to stand for “Saved to Serve.”" },
+      { cat: "Ecclesiastical", stat: "", text: "When two officers marry, they serve together as a team and often lead a corps side by side, just like the Captains of Harlem Temple." },
+      { cat: "Ecclesiastical", stat: "", text: "The Salvation Army’s worldwide leader is called the General. The General is elected by the High Council and leads from International Headquarters in London." },
+      { cat: "Ecclesiastical", stat: "", text: "The Salvation Army crest is full of meaning: the cross of Jesus, the S for salvation, crossed swords for the fight against sin, and a crown for the reward of the faithful." },
+      { cat: "Service", stat: "134", text: "The Salvation Army is officially at work in 134 countries around the world.", source: "salvationarmy.org" },
+      { cat: "Service", stat: "28M+", text: "In 2025, The Salvation Army served more than 28 million people across the United States.", source: "The Salvation Army USA 2026 Annual Report" },
+      { cat: "Service", stat: "183M", text: "The Salvation Army served more than 183 million meals in the United States in 2025.", source: "The Salvation Army USA 2026 Annual Report" },
+      { cat: "Service", stat: "10M+", text: "In 2025, The Salvation Army provided more than 10 million nights of shelter in the United States.", source: "The Salvation Army USA 2026 Annual Report" },
+      { cat: "Service", stat: "1.5M", text: "More than 1.5 million volunteers served with The Salvation Army in the United States in 2025. You could be one of them: scan the Volunteer Sign-Up code below.", source: "The Salvation Army USA 2026 Annual Report" },
+      { cat: "Service", stat: "972", text: "The Salvation Army responded to 972 disasters in the United States in 2025, from house fires to hurricanes.", source: "The Salvation Army USA 2026 Annual Report" },
+      { cat: "Service", stat: "7,600", text: "The Salvation Army serves from nearly 7,600 locations across the United States, including more than 1,000 corps community centers.", source: "The Salvation Army USA 2026 Annual Report" },
+      { cat: "Service", stat: "1,244", text: "The Salvation Army runs 1,244 food pantries in the United States, including the one right here at Harlem Temple.", source: "The Salvation Army USA 2026 Annual Report" },
+      { cat: "Service", stat: "1.4M", text: "In 2025, The Salvation Army helped nearly 1.4 million households in the United States with financial assistance such as rent and utility help.", source: "The Salvation Army USA 2026 Annual Report" },
+      { cat: "Service", stat: "15M", text: "The Salvation Army gave out more than 15 million items in the United States in 2025, including clothing, furniture and gifts.", source: "The Salvation Army USA 2026 Annual Report" }
+    ]
+  },
+
   /* ---------- Timing ---------- */
   defaultDuration: 12,       // seconds each slide stays up (videos play to the end)
   sheetRefreshMinutes: 5,    // how often to re-check the Google Sheet for new content
@@ -222,6 +269,7 @@ window.LOBBY = {
       tagline: "Serving God. Loving People. Strengthening Harlem.",
       body: "Captain Neek and Captain Jeanne-Elie are honored to serve the Harlem community through faith, compassion, and service. Together, they lead Harlem Temple’s worship and ministry while supporting programs that serve children, youth, families, seniors, and neighbors in need."
     },
+    { type: "factofday", duration: 15 },
     { type: "programs", duration: 10 },   // one slide for every program in the weekly schedule above, built automatically
     { type: "image", media: "media/music-arts-26-27.jpg", fit: "contain", duration: 15 },
     { type: "image", media: "media/christmas-toy-distribution.jpg", fit: "contain", duration: 15, end: "2026-12-19" },
