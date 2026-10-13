@@ -194,6 +194,9 @@ window.LOBBY = {
   // One fact per day, working down the list and starting over at the end. Add, edit or remove lines freely.
   // cat: "History", "Ecclesiastical" or "Service".  stat: optional big number or year shown beside the fact.
   factOfDay: {
+    // A brand-new fact for each day is added here by a daily task (no Netlify publish needed):
+    feed: "https://raw.githubusercontent.com/pierrenfilsaime-netizen/harlemtemple-lobby/data/facts.json",
+    // Backup list, used only if today's new fact is missing:
     startDate: "2026-10-13",
     facts: [
       { cat: "History", stat: "1865", text: "The Salvation Army began in 1865 in London’s East End, when William and Catherine Booth started preaching in the streets to people the churches overlooked. It was first called the East London Christian Mission." },

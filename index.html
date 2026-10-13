@@ -495,7 +495,21 @@
   }
 
   /* ---------- Fact of the Day: one fact per calendar day ---------- */
+  // A new fact for each day is published to facts.json on the repository's "data" branch by a daily task
+  // (no Netlify publish needed). If today's entry is missing, fall back to the list in config.js.
+  let factFeed = [];
+  async function loadFactFeed(){
+    const url = (C.factOfDay || {}).feed; if (!url) return;
+    try {
+      const r = await fetch(url + "?t=" + Math.floor(Date.now() / 600000), { cache: "no-store" });
+      if (r.ok) { const j = await r.json(); if (Array.isArray(j.facts)) factFeed = j.facts; }
+    } catch(e) { /* offline: keep what we have */ }
+  }
+  loadFactFeed(); setInterval(loadFactFeed, 30 * 60e3);
   function factOfTheDay(){
+    const n0 = new Date(), key = ymd(n0);
+    const fresh = factFeed.find(f => f && f.date === key && f.text);
+    if (fresh) return fresh;
     const cfg = C.factOfDay || {}, list = cfg.facts || [];
     if (!list.length) return null;
     const s = day(cfg.startDate) || new Date(2026, 9, 13), n = new Date();
