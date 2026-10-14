@@ -1,6 +1,14 @@
 {
   "about": "Daily Salvation Army Fact of the Day for the Harlem Temple lobby screen. One entry per date (YYYY-MM-DD). 'used' lists facts already shown so new ones are never repeated.",
-  "facts": [],
+  "facts": [
+    {
+      "date": "2026-10-14",
+      "cat": "History",
+      "stat": "1879",
+      "text": "In 1879, a year before the Army officially came to America, teenager Eliza Shirley and her parents, Amos and Annie, held Salvation Army meetings in an old chair factory in Philadelphia. Their success led William Booth to send help.",
+      "source": ""
+    }
+  ],
   "used": [
     "The Salvation Army began in 1865 in London’s East End, when William and Catherine Booth started preaching in the streets to people the churches overlooked. It was first called the East London Christian Mission.",
     "The name came from a single edit. In 1878 William Booth changed the line “We are a volunteer army” to “We are a salvation army,” and the name stuck.",
@@ -39,6 +47,7 @@
     "The Salvation Army serves from nearly 7,600 locations across the United States, including more than 1,000 corps community centers.",
     "The Salvation Army runs 1,244 food pantries in the United States, including the one right here at Harlem Temple.",
     "In 2025, The Salvation Army helped nearly 1.4 million households in the United States with financial assistance such as rent and utility help.",
-    "The Salvation Army gave out more than 15 million items in the United States in 2025, including clothing, furniture and gifts."
+    "The Salvation Army gave out more than 15 million items in the United States in 2025, including clothing, furniture and gifts.",
+    "In 1879, a year before the Army officially came to America, teenager Eliza Shirley and her parents, Amos and Annie, held Salvation Army meetings in an old chair factory in Philadelphia. Their success led William Booth to send help."
   ]
 }
