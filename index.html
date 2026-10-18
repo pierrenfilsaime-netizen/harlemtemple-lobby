@@ -256,9 +256,36 @@
 <div id="paused">PAUSED</div>
 
 <script src="qrcode.js"></script>
-<script src="config.js"></script>
 <script>
+/* ---------- Settings: read from the GitHub "data" branch so content changes cost no Netlify credits ----------
+   Order: data branch (fresh) -> last copy this screen saved -> config.js on Netlify (fallback). */
 (function(){
+  const FEED = "https://raw.githubusercontent.com/pierrenfilsaime-netizen/harlemtemple-lobby/data/config.js";
+  let started = false;
+  const run = t => { window.LOBBY = undefined; (new Function(t))(); if (!window.LOBBY) throw new Error("no LOBBY"); };
+  const start = () => { if (started) return; started = true; window.__startLobby(); };
+  function fallback(){
+    let t = null; try { t = localStorage.getItem("lobby-config"); } catch(e){}
+    if (t) { try { run(t); window.__cfgText = t; return start(); } catch(e){} }
+    const sc = document.createElement("script"); sc.src = "config.js"; sc.onload = start; sc.onerror = start; document.head.appendChild(sc);
+  }
+  async function get(){
+    const ac = new AbortController(); const to = setTimeout(() => ac.abort(), 8000);
+    try { const r = await fetch(FEED + "?t=" + Date.now(), { cache: "no-store", signal: ac.signal }); if (!r.ok) throw new Error(r.status); return await r.text(); }
+    finally { clearTimeout(to); }
+  }
+  window.addEventListener("DOMContentLoaded", () => {
+    get().then(t => { run(t); window.__cfgText = t; try { localStorage.setItem("lobby-config", t); } catch(e){} start(); }).catch(fallback);
+  });
+  // Every 10 minutes: if the settings on the data branch changed, reload to show them (not while the livestream is on)
+  setInterval(async () => {
+    try { const t = await get(); if (window.__cfgText && t !== window.__cfgText) { const live = document.getElementById("live"); if (!(live && live.classList.contains("on"))) location.reload(); } }
+    catch(e) { /* offline: keep showing what's on screen */ }
+  }, 10 * 60e3);
+})();
+</script>
+<script>
+window.__startLobby = function(){
   const C = window.LOBBY || {};
   const $ = id => document.getElementById(id);
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -912,23 +939,23 @@
         else if (++misses >= 2) hideLive();        // two "not live" answers in a row before switching back
       } catch(e) { /* network hiccup: keep whatever is showing */ }
     }
-    // Check every minute during the Sunday service window, every 30 minutes otherwise (still catches special services)
+    // Check every 2 minutes during the Sunday service window, hourly otherwise (still catches special services)
     function liveDelay(){
       const d = new Date(), m = d.getHours() * 60 + d.getMinutes();
       const busyWindow = (LS.busyDays || "Sun").toLowerCase().includes(DAYS[d.getDay()]) &&
         m >= (parseTime(LS.busyFrom || "9:30 AM") ?? 570) && m <= (parseTime(LS.busyTo || "2:00 PM") ?? 840);
-      return (currentId || busyWindow ? 1 : (LS.quietCheckMinutes || 30)) * 60e3;
+      return (currentId || busyWindow ? (LS.busyCheckMinutes || 2) : (LS.quietCheckMinutes || 60)) * 60e3;
     }
     (function loop(){ checkLive().finally(() => setTimeout(loop, liveDelay())); })();
   }
 
-  /* ---------- Auto-update: reload as soon as a new version is published ---------- */
-  // Every minute, fetch the page and settings fresh from the server and compare them with what's running.
+  /* ---------- Auto-update: reload when the page itself is republished on Netlify ---------- */
+  // Checks rarely (updateCheckSeconds, 6 hours) to keep Netlify requests down; settings changes are picked up from the data branch.
   // If either changed, reload. If the internet is down, keep showing what's on screen.
   // Uses HEAD requests: the server answers with each file's version stamp (ETag) without sending the file,
   // so checking costs almost nothing. Falls back to downloading only if no stamp is available.
   async function fingerprint(){
-    const files = ["index.html", "config.js"];
+    const files = ["index.html"];   // settings changes come from the data branch (see the top of the page)
     let s = "";
     for (const f of files) {
       const r = await fetch(f, { method: "HEAD", cache: "no-store" });
@@ -951,7 +978,7 @@
     }, (C.updateCheckSeconds || 300) * 1000);
   }
   if (C.sheetCsvUrl) setInterval(loadSheet, (C.sheetRefreshMinutes || 5) * 60e3);
-})();
+};
 </script>
 </body>
 </html>

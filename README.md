@@ -1,5 +1,10 @@
 # Harlem Temple Lobby Display
 
+> **Saving Netlify credits:** the screen reads its settings from `config.js` on the **`data` branch** and checks it every 10 minutes,
+> so content changes (slides, ticker, flyers, schedule) go there and cost no Netlify credits. `config.js` on `main` is only a
+> fallback for when GitHub can't be reached. Publish `main` only for design changes to `index.html`.
+
+
 A full screen slideshow for the lobby TV: photos, videos, announcements, events and scripture, with a lower third that always shows the Volunteer Sign-Up QR, Volunteer Check-In QR, a "Save Our Contact" QR (adds the Corps to a visitor's phone), a scrolling ticker, and the time and date.
 
 Cost: $0. No subscriptions, no accounts required beyond free ones.

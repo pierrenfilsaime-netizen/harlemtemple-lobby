@@ -123,8 +123,9 @@ window.LOBBY = {
   livestream: {
     youtubeChannel: "@harlemtemplecorps1348",   // your channel's @handle (e.g. "@HarlemTemple") or its UC... channel ID. Blank = off.
     sound: true,               // play the stream's audio in the lobby (false = muted)
-    busyDays: "Sun", busyFrom: "9:30 AM", busyTo: "2:00 PM",   // check every minute in this window
-    quietCheckMinutes: 30,     // ...and this often the rest of the week (catches special services)
+    busyDays: "Sun", busyFrom: "9:30 AM", busyTo: "2:00 PM",   // check often in this window...
+    busyCheckMinutes: 2,       // ...this often (each check is a small Netlify function call)
+    quietCheckMinutes: 60,     // ...and this often the rest of the week (catches special services)
     label: ""                  // text next to LIVE; blank = name of the program happening now (e.g. "Holiness Service")
   },
 
@@ -243,7 +244,7 @@ window.LOBBY = {
   /* ---------- Timing ---------- */
   defaultDuration: 12,       // seconds each slide stays up (videos play to the end)
   sheetRefreshMinutes: 5,    // how often to re-check the Google Sheet for new content
-  updateCheckSeconds: 300,   // how often the screen checks for a newly published version and reloads itself (5 min)
+  updateCheckSeconds: 21600, // how often the screen checks Netlify for a new page design (6 hours). Settings changes come from the data branch every 10 min.
   reloadEveryHours: 6,       // extra full refresh as a safety net
 
   /* ---------- Optional: run the slides from a Google Sheet ---------- */
