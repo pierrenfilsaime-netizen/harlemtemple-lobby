@@ -281,6 +281,8 @@ window.LOBBY = {
       ticker: "Annual Harvest Celebration: Still We Sow · Sun, Nov 15, 3:00 PM · Guest speakers Lt. Colonels David & Margaret Davis" },
     { type: "image", media: "media/valentine-gala-tea-2027.jpg", fit: "contain", duration: 15, start: "2027-01-04", date: "2027-02-13", end: "2027-02-13",
       ticker: "Valentine Gala & Tea · Sat, Feb 13, 5:00 PM · $30 per person, $50 per couple · Dress to impress" },
+    // Thank-you to the Microsoft volunteers (served Oct 27, 2026). Image is stored on the data branch, so no Netlify publish was needed.
+    { type: "image", media: "https://raw.githubusercontent.com/pierrenfilsaime-netizen/harlemtemple-lobby/data/media/thank-you-microsoft-volunteers.jpg", fit: "contain", duration: 15, end: "2026-11-01" },
     { type: "image", media: "media/womens-ministry.jpg", fit: "contain", duration: 15 },
     { type: "image", media: "media/mens-ministry.jpg", fit: "contain", duration: 15 },
     {
