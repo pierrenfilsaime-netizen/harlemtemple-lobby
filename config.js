@@ -283,6 +283,8 @@ window.LOBBY = {
       ticker: "Valentine Gala & Tea · Sat, Feb 13, 5:00 PM · $30 per person, $50 per couple · Dress to impress" },
     // Thank-you to the Microsoft volunteers (served Oct 27, 2026). Image is stored on the data branch, so no Netlify publish was needed.
     { type: "image", media: "https://raw.githubusercontent.com/pierrenfilsaime-netizen/harlemtemple-lobby/data/media/thank-you-microsoft-volunteers.jpg", fit: "contain", duration: 15, end: "2026-11-01" },
+    { type: "image", media: "https://raw.githubusercontent.com/pierrenfilsaime-netizen/harlemtemple-lobby/data/media/christmas-show-concert-2026.jpg", fit: "contain", duration: 15, date: "2026-12-20", end: "2026-12-20",
+      ticker: "Christmas Show & Concert · What the Herd Heard · Sun, Dec 20, 3:00 PM · $10.00 donation · Kids Dance, Youth Brass Band and our Singing Groups" },
     { type: "image", media: "media/womens-ministry.jpg", fit: "contain", duration: 15 },
     { type: "image", media: "media/mens-ministry.jpg", fit: "contain", duration: 15 },
     {
