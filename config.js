@@ -291,6 +291,8 @@ window.LOBBY = {
       ticker: "Christmas Show & Concert · What the Herd Heard · Sun, Dec 20, 3:00 PM · $10.00 donation · Kids Dance, Youth Brass Band and our Singing Groups" },
     { type: "image", media: "media/womens-ministry.jpg", fit: "contain", duration: 15 },
     { type: "image", media: "media/mens-ministry.jpg", fit: "contain", duration: 15 },
+    // Become a Virtual Donor (QR goes to give.salvationarmy.org/campaign/854184/donate). Image is on the data branch, so no Netlify publish is needed.
+    { type: "image", media: "https://raw.githubusercontent.com/pierrenfilsaime-netizen/harlemtemple-lobby/data/media/virtual-donor.jpg", fit: "contain", duration: 15 },
     {
       type: "scripture",
       text: "Truly I tell you, whatever you did for one of the least of these brothers and sisters of mine, you did for me.",
