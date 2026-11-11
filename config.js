@@ -18,14 +18,14 @@ window.LOBBY = {
     hint:  "Join the team",
     url:   "https://x.gldn.io/e/The_Salvation_Army_New_York_Harlem_Temple_Corps_Community_Center"
   },
+  // Showing DONATE for now. To bring volunteer check-in back, change label to "Volunteer Check-In", hint to "Here today?",
+  // put the checkin feed line back (feed: "https://raw.githubusercontent.com/pierrenfilsaime-netizen/harlemtemple-lobby/data/checkin.json"),
+  // and use the Golden check-in link as url.
   volunteerCheckin: {
-    label: "Volunteer Check-In",
-    hint:  "Here today?",
-    // NOTE: Golden check-in links are made for one day and expire. Paste a fresh one when it changes.
-    // When this link expires, the screen automatically swaps the code for "See the front desk" instead of showing a dead code.
-    url:   "https://checkin.eastern.salvationarmyusa.org/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlLZXkiOiJaLWpqWFFsbTBzNGM3UzB5eEhlLXc2ZWVOdGN4M2ptOTdEdE1QblUzIiwiZGF5T2ZUaW1lc2xvdHMiOiIyMDI2LTEwLTA1Iiwib3JnYW5pemF0aW9uIjoidmtpQ3VKZ3ZqTCIsImlzQ2hlY2tpbiI6dHJ1ZSwiaWF0IjoxNzkxMjEyNzEyLCJleHAiOjE3OTE1NTgzMTJ9.zg3Lpxcly5SIPHngU_98yaDjhTe9wq-duvvzxzYlcfk?dayOf=true",
-    // Newer daily links are read from this file (no Netlify publish needed). It wins whenever its link hasn't expired.
-    feed:  "https://raw.githubusercontent.com/pierrenfilsaime-netizen/harlemtemple-lobby/data/checkin.json",
+    label: "Donate Today",
+    hint:  "Give online",
+    url:   "https://give.salvationarmy.org/campaign/854184/donate",
+    feed:  "",
     expiredHint: "See the front desk"
   },
   // Scanning this one saves the Corps as a contact in the visitor's phone.
