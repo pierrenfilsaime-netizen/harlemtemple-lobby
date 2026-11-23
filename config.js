@@ -289,6 +289,9 @@ window.LOBBY = {
       ticker: "Sunday Worship · Sun, Nov 8, 11:00 AM · Speaker: Captain Neekenson Fils-Aime · There's a place for you here" },
     { type: "image", media: "https://raw.githubusercontent.com/pierrenfilsaime-netizen/harlemtemple-lobby/data/media/christmas-show-concert-2026.jpg", fit: "contain", duration: 15, date: "2026-12-20", end: "2026-12-20",
       ticker: "Christmas Show & Concert · What the Herd Heard · Sun, Dec 20, 3:00 PM · Harlem Hospital Auditorium · $10.00 donation · Kids Dance, Youth Brass Band and our Singing Groups" },
+    // Star Lake Summer Camp 2027 (QR opens the Star Lake camper application). Shows until camp ends; tickerLead keeps its ticker line running from now until then.
+    { type: "image", media: "https://raw.githubusercontent.com/pierrenfilsaime-netizen/harlemtemple-lobby/data/media/star-lake-summer-camp-2027.jpg", fit: "contain", duration: 15, start: "2026-11-23", date: "2027-07-13", end: "2027-07-30", tickerLead: 170,
+      ticker: "Star Lake Summer Camp 2027 · Registration open · Adventure Week Jul 13 to 16 · Mega Sports Week Jul 19 to 23 · STEM Week and Teen Week Jul 26 to 30 · Scan the code on the camp slide to sign up" },
     { type: "image", media: "media/womens-ministry.jpg", fit: "contain", duration: 15 },
     { type: "image", media: "media/mens-ministry.jpg", fit: "contain", duration: 15 },
     // Become a Virtual Donor (QR goes to give.salvationarmy.org/campaign/854184/donate). Image is on the data branch, so no Netlify publish is needed.
